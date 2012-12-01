@@ -1,7 +1,7 @@
 {
   "name": "Whisper",
   "version": "1.0",
-  "manifest_version": 1,
+  "manifest_version": 2,
   "description": "whisper",
   "browser_action": {
     "default_icon": "icon.png",
