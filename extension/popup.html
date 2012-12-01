@@ -16,17 +16,29 @@
         height:75px;
       }
     </style>
-
+	<link href="bootstrap.min.css" rel="stylesheet">
     <!-- JavaScript and HTML must be in separate files for security. -->
     <!-- // <script src="popup.js"></script> -->
   </head>
   <body>
-    Whisper!<br>
-    <form action="demo_form.asp">
-      Username: <input type="text" name="fname"><br>
-      Password: <input type="text" name="lname"><br>
-      <input type="submit" value="Submit">
-      <input type="submit" value="Register">
+    <center>
+    <h2>whisper.</h2>
+    <form action="demo_form.asp" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="inputUsername">username</label>
+        <div class="controls">
+          <input type="text" id="inputUsername" placeholder="username">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputPassword">password</label>
+        <div class="controls">
+          <input type="password" id="inputPassword" placeholder="password">
+        </div>
+      </div>
+      <button class="btn" type="submit" value="Submit">submit</button>
+      <button class="btn" type="submit" value="Register">register</button>
     </form>
+    </center>
   </body>
 </html>
