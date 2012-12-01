@@ -13,6 +13,8 @@
     "scripts": ["contextmenu.js"]
   },
   "icons": {
-    "16": "icon-bitty.png"
+    "16": "icon-bitty.png",
+    "32": "icon-small.png",
+    "64": "icon-medium.png"
   }
 }
