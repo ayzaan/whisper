@@ -12,7 +12,13 @@
   "background": {
     "scripts": ["contextmenu.js"]
   },
-  "icons": {
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content_script.js"]
+    }
+  ],
+  "icons": {  
     "16": "icon-bitty.png",
     "32": "icon-small.png",
     "64": "icon-medium.png"

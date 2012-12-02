@@ -3,7 +3,10 @@
   </head>
   <body>
     <script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"></script>
+    <script type='text/javascript' src='https://static.firebase.com/v0/firebase.js'></script>
     <script type='text/javascript'>
+    var myDataRef = new Firebase('https://whisper.firebaseIO.com');
+    myDataRef.child('users').set({});
     //prefix and suffix
     var prefix = "##Whisper##";
     //generate random string
@@ -12,7 +15,12 @@
     
     var encrypted = CryptoJS.AES.encrypt("Message", key);
     var encryptedOutput = prefix + salt + encrypted.toString() + prefix;
+    var userRef = new Firebase('https://whisper.firebaseIO.com/users');
+    userRef.child('ayzaan').set({});
+    var ayzaanRef = new Firebase('https://whisper.firebaseIO.com/users/ayzaan');
+    ayzaanRef.child(salt).set(key);
 
+    //userRef.child(salt).set(encryptedOutput);
     log();
     /** Outputs info in log. */
     function log () {
