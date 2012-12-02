@@ -33,4 +33,36 @@
 		
 		echo json_encode($result);
 	}
+	else if ($_REQUEST['action'] == 'checkuser'){
+		$sql_result = mysql_result(mysql_query(sprintf("SELECT id FROM users WHERE username='%s'", $_REQUEST['username'])));
+		if($sql_result){
+			$result['success'] = true;
+			$result['id'] = $sql_result;
+		}
+		else
+			$result['success'] = false;
+		echo json_encode($result);
+	}
+	else if ($_REQUEST['action'] == 'share'){
+		$sql_result = mysql_result(mysql_query(sprintf("SELECT id FROM users WHERE username='%s'", $_REQUEST['username'])));
+		$result['success'] = false;
+		if ( $sql_result ){
+			if ( mysql_query(sprintf("INSERT INTO keys (group_id, recipient_id, key) VALUES ('%d', '%d', '%s')", $_REQUEST['group_id'], $sql_result, $_REQUEST['key'])) ){
+				$result['success'] = true;
+			}
+		}
+		
+		echo json_encode($result);
+	}
+	else if ($_REQUEST['action'] == 'retrieve'){
+		$result['success'] = false;
+		$sql_result = mysql_result(mysql_query("SELECT key FROM keys WHERE group_id = '%d' AND user_id = '%d'", $_REQUEST['group_id'], $_REQUEST['user_id']));
+		if ( $sql_result ) {
+			mysql_query(sprintf("REMOVE FROM keys WHERE group_id = '%d' AND user_id = '%d' LIMIT 1", $_REQUEST['group_id'], $_REQUEST['user_id']));
+			$result['key'] = $sql_result;
+			$result['success'] = true;
+		}
+		
+		echo json_encode($result);
+	}
 ?>
