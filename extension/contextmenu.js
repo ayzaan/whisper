@@ -11,4 +11,6 @@ function attach(info)
 	// if logged in, then either add the other person's username on whisper, or attach the key in link
 }
 
-chrome.contextMenus.create({"title": "Encrypt with Whisper", "onclick": firebasesucks});
+chrome.contextMenus.create ({
+    title:"Encrypt with Whisper", contexts:["editable"], onclick:firebasesucks
+});
