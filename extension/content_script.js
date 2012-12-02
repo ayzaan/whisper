@@ -15,10 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
     
-function encrypt(value){
-	var key = CryptoJS.lib.WordArray.random(128/8).toString();
-	var group_id = Math.floor(Math.random() * Math.pow(2, 11));
-
+function encrypt(value, group_id){
 	encrypted = CryptoJS.AES.encrypt(value, key);
 	return "=#Whisper-" + group_id + "-" + encrypted.toString() + "Whisper#=";
 }

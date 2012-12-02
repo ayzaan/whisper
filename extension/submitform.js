@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	});
-	$("#btn-addFriend").click(function ()
+	/*$("#btn-addFriend").click(function ()
 	{
 		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=login&username="+$("#inputUsername").get(0).value+"&pw="+$("#inputPassword").get(0).value, function (data)
 		{
@@ -66,5 +66,23 @@ document.addEventListener('DOMContentLoaded', function() {
 				chrome.storage.local.set({'pw' : data['pw']});
 			}
 		});
+	});*/
+
+	$("#btn-addFriend").click(function ()
+	{
+		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=addFriend&groupname="+$("").get(0).value+"&key="+$(""))
+	});
+
+	$("#btn-addGroup").click(function()
+	{
+		var key = CryptoJS.lib.WordArray.random(128/8).toString();
+		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=newGroup&groupname="+$("#inputGroupName").get(0).value, function(data)
+		{
+			if (data['success'])
+			{
+				var gid = data['groupid'];
+				chrome.storage.local.set({key:gid});
+			}
+		})
 	});
 });
