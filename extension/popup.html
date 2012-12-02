@@ -24,7 +24,7 @@
   <body>
     <center>
     <h2 style="margin-bottom: 15px;">whisper.</h2>
-    <form action="demo_form.asp" class="form-horizontal">
+    <form class="form-horizontal" onsubmit="function(){debugger; what();}">
       <div class="control-group">
         <label class="control-label" for="inputUsername">username</label>
         <div class="controls">
@@ -36,7 +36,7 @@
         <div class="controls">
           <input type="password" id="inputPassword" placeholder="password">
         </div>
-        <button class="btn btn-inverse" type="submit" value="Submit" onclick="console.log("lol");">login</button>
+        <button class="btn btn-inverse" type="submit" value="Submit" onClick="what();">login</button>
         <h3 style="position: relative; top: 4px; margin-left:10px; margin-right:10px; display: inline-block;">or</h3>
         <button class="btn btn-success" type="submit" value="Register">register</button>
       </div>
