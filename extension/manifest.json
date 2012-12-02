@@ -15,7 +15,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["content_script.js", "jquery-1.8.3.min.js", "EncryptedForms.js"]
+      "js": ["content_script.js", "jquery-1.8.3.min.js", "EncryptedForms.js", "jquery.livequery.js"]
     }
   ],
   "icons": {  
