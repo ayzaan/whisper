@@ -10,8 +10,7 @@ function attach(info)
 	// if not logged in, tell user to click on button on top left and login
 	// if logged in, then either add the other person's username on whisper, or attach the key in link
 }
-// make contextmenu only work if it's a text field
 
 chrome.contextMenus.create ({
-    title:"Encrypt with whisper", contexts:["editable"], onclick: firebasesucks(info)
+    title:"Encrypt with Whisper", contexts:["editable"], onclick:firebasesucks
 });
