@@ -1,0 +1,37 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"></script>
+    <script type='text/javascript'>
+    //prefix and suffix
+    var prefix = "##Whisper##";
+    //generate random string
+    var key = CryptoJS.lib.WordArray.random(128/8).toString();
+    var salt = CryptoJS.lib.WordArray.random(128/8).toString();
+    
+    var encrypted = CryptoJS.AES.encrypt("Message", key);
+    var encryptedOutput = prefix + salt + encrypted.toString() + prefix;
+
+    log();
+    /** Outputs info in log. */
+    function log () {
+      console.log("Key: " + key);
+      console.log(encryptedOutput);
+      //console.log(decrypted.toString(CryptoJS.enc.Utf8));
+      console.log(salt.length);
+    }
+
+    function decrypt() {
+      var stripped = encryptedOutput.replace(prefix, "").replace(prefix, "").substring(32);
+      console.log(stripped);
+
+      var decrypted = CryptoJS.AES.decrypt(stripped, key);
+      console.log(decrypted.toString(CryptoJS.enc.Utf8));
+    }
+
+    decrypt();
+</script>
+
+  </body>
+</html>
