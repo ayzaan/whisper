@@ -14,6 +14,18 @@ function attach(e)
 	
 }
 
+function decryptattach(e)
+{
+
+	chrome.tabs.getSelected(null,function(tab) {
+		chrome.tabs.sendMessage(tab.id, {method:"enableDecrypt"}, null)
+	})
+}
+
 chrome.contextMenus.create ({
 	title:"Encrypt with Whisper", contexts:["editable"], onclick:attach
+});
+
+chrome.contextMenus.create({
+	title:"Decrypt a Whisper", contexts:["selection"], onclick:decryptattach
 });

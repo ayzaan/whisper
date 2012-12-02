@@ -17,13 +17,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
 function encrypt(value, group_id){
 	encrypted = CryptoJS.AES.encrypt(value, key);
-	return "=#Whisper-" + group_id + "-" + encrypted.toString() + "Whisper#=";
+	return "=#Whisper-" + 1 + "-" + encrypted.toString() + "Whisper#=";
 }
 	
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if(request.method == "enableEncrypt")
 	{
 		EncryptedForms.add(clickedEl);
+    }
+});
+
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+	if(request.method == "enableDecrypt")
+	{
+		alert("hi");
+		var decrypted = CryptoJS.AES.decrypt("%s","7de7aaf36c9d9170e325ff2aa0757e5e");
+		$(clickedEl).html(decrypted);
     }
 });
 
