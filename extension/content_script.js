@@ -13,14 +13,14 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		if (clickedEl != null ) {
 			if( clickedEl.form != null){
 				alert('we have a form');
-				clickedEl.form.addEventListener('submit', function(e){ encrypt(clickedEl) }, true);
+				clickedEl.form.addEventListener('submit', function(e){ encrypt(clickedEl) }, false);
 			} else {
 				alert("Attached to element " + clickedEl.id);
 				clickedEl.addEventListener('keydown', function(e){ 
 					if (e.keyCode == 13 && !e.shiftKey) { 
 						encrypt(clickedEl) 
 					} 
-				}, true);
+				}, false);
 			}
 		} else { 
 			alert('wtf!');
