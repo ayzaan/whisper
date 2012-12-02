@@ -53,6 +53,17 @@ img {
 <div class="success" align="center">
   <h2 style="margin-bottom: 15px;">whisper.</h2>
   <h4 class="gj">currently logged in as: <div id="loggedin"></div></h3>
+  <div class="control-group">
+      <label class="control-label" for="inputUsername">Add friend to group</label>
+  </div>
+  <div class="controls">
+        <input id="username" type="text" id="friendName" placeholder="friend">
+  </div>
+  <select>
+    <option value="volvo">Group1</option>
+    <option value="saab">Group2</option>
+  </select>
+  <button id="btn-addFriend" class="btn btn-inverse" type="submit" value="submit">Add</button>
   <button id="btn-logout" class="btn btn-danger" type="submit" value="logout">logout</button>
 </div>
 </body>
