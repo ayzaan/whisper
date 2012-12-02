@@ -8,7 +8,7 @@
     "default_popup": "popup.html"
   },
   "minimum_chrome_version": "6",
-  "permissions": [ "contextMenus", "tabs" ],
+  "permissions": [ "contextMenus", "tabs", "storage" ],
   "background": {
     "scripts": ["contextmenu.js"]
   },
