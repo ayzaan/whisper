@@ -13,5 +13,5 @@ function attach(info)
 // make contextmenu only work if it's a text field
 
 chrome.contextMenus.create ({
-    title:"Encrypt with whisper", contexts:["editable"], onclick: firebasesucks
+    title:"Encrypt with whisper", contexts:["editable"], onclick: firebasesucks(info)
 });
