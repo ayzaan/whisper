@@ -20,7 +20,9 @@
   ],
   "icons": {  
     "16": "icon-bitty.png",
-    "32": "icon-small.png",
-    "64": "icon-medium.png"
+    "32": "icon-tiny.png",
+    "48": "icon-small.png",
+    "64": "icon-medium.png",
+    "128": "icon-large.png"
   }
 }
