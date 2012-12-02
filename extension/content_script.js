@@ -9,22 +9,9 @@ document.addEventListener("mousedown", function(event){
 }, true);
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-	if(request.method == "enableEncrypt") {
-		if (clickedEl != null ) {
-			if( clickedEl.form != null){
-				alert('we have a form');
-				clickedEl.form.addEventListener('submit', function(e){ encrypt(clickedEl) }, false);
-			} else {
-				alert("Attached to element " + clickedEl.id);
-				clickedEl.addEventListener('keydown', function(e){ 
-					if (e.keyCode == 13 && !e.shiftKey) { 
-						encrypt(clickedEl) 
-					} 
-				}, false);
-			}
-		} else { 
-			alert('wtf!');
-		}
+	if(request.method == "enableEncrypt")
+	{
+		EncryptedForms.add(clickedEl);
     }
 });
 
