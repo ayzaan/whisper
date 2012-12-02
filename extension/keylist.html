@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<title>Getting Started Extension's Popup</title>
+<style>
+body {
+	min-width:300px;
+	overflow-x:hidden;
+}
+img {
+	margin:5px;
+	border:2px solid black;
+	vertical-align:middle;
+	width:50px;
+	height:75px;
+}
+.login, .success {
+	display: none;
+}
+
+#loggedin
+{
+	display: inline-block;
+	text-decoration: underline;
+}
+</style>
+<link href="bootstrap.min.css" rel="stylesheet">
+<!-- JavaScript and HTML must be in separate files for security. -->
+<script src="jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="submitform.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="login" align="center">
+  <h2 style="margin-bottom: 15px;">whisper.</h2>
+  <div class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="inputUsername">username</label>
+      <div class="controls">
+        <input id="username" type="text" id="inputUsername" placeholder="username">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputPassword">password</label>
+      <div class="controls">
+        <input id="pw" type="password" id="inputPassword" placeholder="password">
+      </div>
+      <button id="btn-login" class="btn btn-inverse" type="submit" value="submit">login</button>
+      <h3 style="position: relative; top: 4px; margin-left:10px; margin-right:10px; display: inline-block;">or</h3>
+      <button id="btn-register" class="btn btn-success" type="submit" value="register">register</button>
+    </div>
+  </div>
+</div>
+<div class="success" align="center">
+  <h2 style="margin-bottom: 15px;">whisper.</h2>
+  <h4 class="gj">currently logged in as: <div id="loggedin"></div></h3>
+  <button id="btn-logout" class="btn btn-danger" type="submit" value="logout">logout</button>
+</div>
+</body>
+</html>

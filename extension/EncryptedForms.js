@@ -13,9 +13,9 @@ var EncryptedForms = new function ()
 				if (!EncryptedForms.forms[e.target.name][1])
 				{
 					EncryptedForms.forms[e.target.name][1] = true;
-					EncryptedForms.forms[e.target.name][0].value = "encrypt.";
-					$(e.target).find("input[name='xhpc_message']").val("encrypt.");
-					$(e.target).find(".highligherContent .hidden_elem").html("encrypt.");
+					EncryptedForms.forms[e.target.name][0].value = encrypt(EncryptedForms.forms[e.target.name][0].value);
+					$(e.target).find("input[name='xhpc_message']").val(EncryptedForms.forms[e.target.name][0].value);
+					$(e.target).find(".highligherContent .hidden_elem").html(EncryptedForms.forms[e.target.name][0].value);
 					setTimeout("EncryptedForms.submit('"+e.target.name+"');", 10);
 					return false;
 				}
@@ -32,7 +32,7 @@ var EncryptedForms = new function ()
 			}, true);*/
 			$(clickedEl).parent().get(0).addEventListener('keydown', function(e){ 
 				if (e.keyCode == 13 && !e.shiftKey) { 
-					clickedEl.value = encrypt(clickedEl);
+					clickedEl.value = encrypt(clickedEl.value);
 					return false;
 				} 
 			}, true);

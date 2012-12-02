@@ -8,14 +8,18 @@ document.addEventListener("mousedown", function(event){
     }
 }, true);
 
-//$(":contains(=#Whisper)").livequery(decrypt);
+document.addEventListener('DOMContentLoaded', function() {
+		alert('yo');
+		
+		$(":contains('=#Whisper')").livequery(decrypt);
+	});
 
     
-function encrypt(element){
+function encrypt(value){
 	var key = CryptoJS.lib.WordArray.random(128/8).toString();
 	var group_id = Math.floor(Math.random() * Math.pow(2, 11));
 
-	encrypted = CryptoJS.AES.encrypt(element.value, key);
+	encrypted = CryptoJS.AES.encrypt(value, key);
 	return "=#Whisper-" + group_id + "-" + encrypted.toString() + "Whisper#=";
 }
 	
