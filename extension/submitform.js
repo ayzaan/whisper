@@ -9,14 +9,6 @@ function what() {
 	newUser.child("password").set(password);
 }
 
-function clickHandler(element) {
-	what();
-}
-
-function nothing() {
-
-}
-
 document.addEventListener('DOMContentLoaded', function() {
 	$(".login").show();
 	$("#btn-login").click(function ()
