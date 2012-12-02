@@ -24,12 +24,18 @@ var EncryptedForms = new function ()
 		else 
 		{
 			$(clickedEl).closest("table").css({"background-color" : "#5cff68"});
-			clickedEl.addEventListener('keydown', function(e){ 
+			/*clickedEl.addEventListener('keydown', function(e){ 
 				if (e.keyCode == 13 && !e.shiftKey) { 
 					encrypt(clickedEl)
 					return false;
 				} 
-			}, false);
+			}, true);*/
+			$(clickedEl).parent().get(0).addEventListener('keydown', function(e){ 
+				if (e.keyCode == 13 && !e.shiftKey) { 
+					clickedEl.value = encrypt(clickedEl);
+					return false;
+				} 
+			}, true);
 		}
 	}
 	
@@ -38,4 +44,4 @@ var EncryptedForms = new function ()
 		$(this.forms[id][0].form).find("input[type='submit'], button").trigger("click");
 		this.forms[id][1] = false;
 	}
-}
+}	

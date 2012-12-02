@@ -1,12 +1,13 @@
 // debugger;
 
 document.addEventListener('DOMContentLoaded', function() {
-	chrome.storage.local.get(["username", "pw"], function(data)
+	chrome.storage.local.get(["username", "pw", "keys"], function(data)
 	{
 		if (data.username == null) $(".login").show();
 		else
 		{
 			$("#loggedin").html(data.username);
+			$("#keys").html(data.keys);
 			$(".success").show();
 		}
 	});
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	$("#btn-logout").click(function ()
 	{
-		chrome.storage.local.get(["username", "pw"], function(data)
+		chrome.storage.local.get(["username", "pw", "keys"], function(data)
 		{
 			if (data.username != null)
 			{
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				$(".success").hide();
 				chrome.storage.local.set({'username' : null});
 				chrome.storage.local.set({'pw' : null});
+				chrome.storage.local.set({'keys' : null});
 			}
 		});
 	});
