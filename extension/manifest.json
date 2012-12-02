@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "whisper",
   "browser_action": {
-    "default_icon": "icon-bitty.png",
+    "default_icon": "icon-tiny.png",
     "default_popup": "popup.html"
   },
   "minimum_chrome_version": "6",
