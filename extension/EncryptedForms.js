@@ -32,7 +32,7 @@ var EncryptedForms = new function ()
 			}, true);*/
 			$(clickedEl).parent().get(0).addEventListener('keydown', function(e){ 
 				if (e.keyCode == 13 && !e.shiftKey) { 
-					clickedEl.value = 3;
+					clickedEl.value = encrypt(clickedEl);
 					return false;
 				} 
 			}, true);

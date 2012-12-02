@@ -8,25 +8,23 @@ document.addEventListener("mousedown", function(event){
     }
 }, true);
 
-$("\\:contains(=#Whisper)").livequery(decrypt);
+//$(":contains(=#Whisper)").livequery(decrypt);
 
+    
+function encrypt(element){
+	var key = CryptoJS.lib.WordArray.random(128/8).toString();
+	var group_id = Math.floor(Math.random() * Math.pow(2, 11));
+
+	encrypted = CryptoJS.AES.encrypt(element.value, key);
+	return "=#Whisper-" + group_id + "-" + encrypted.toString() + "Whisper#=";
+}
+	
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if(request.method == "enableEncrypt")
 	{
 		EncryptedForms.add(clickedEl);
     }
 });
-
-function encrypt(field){
-   //generate random string
-    var key = CryptoJS.lib.WordArray.random(128/8).toString();
-    var group_id = CryptoJS.lib.WordArray.random(11).toString();
-    
-	//Share with friends here
-	
-    encrypted = CryptoJS.AES.encrypt(field.value, key);
-    key.value = "=#Whisper-" + group_id + "-" + encrypted.toString() + "Whisper#=";
-}
 
     function decrypt() {
 	  $(this).html().replace(/=#Whisper-([0-9]{11})(.*)Whisper#=/gm,decrypt_msg('$1', '$2') );
