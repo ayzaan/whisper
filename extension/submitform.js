@@ -58,4 +58,18 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	});
+	$("#btn-addFriend").click(function ()
+	{
+		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=login&username="+$("#username").get(0).value+"&pw="+$("#pw").get(0).value, function (data)
+		{
+			if (data['success'])
+			{
+				$(".login").hide();
+				$(".success").show();
+				$("#loggedin").html(data['username']);
+				chrome.storage.local.set({'username' : data['username']});
+				chrome.storage.local.set({'pw' : data['pw']});
+			}
+		});
+	});
 });
