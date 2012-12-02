@@ -1,12 +1,27 @@
-debugger;
-function what() {
-  // document.myform.submit();
-  alert("yo");
-  document.write("hsh");
-  console.log("WTF");
-  simpleform.username.value = "foo";
-}
-window.onload = function(){
+// debugger;
 
-	debugger;
+function what() {
+	var username = document.getElementById('inputUsername').value;
+	var password = document.getElementById('inputPassword').value;
+	var nameRef = new Firebase('https://whisper.firebaseIO.com/users');
+	nameRef.child(username).set({});
+	var newUser = new Firebase('https://whisper.firebaseIO.com/users/'+username);
+	newUser.child("password").set(password);
 }
+
+function clickHandler(element) {
+	what();
+}
+
+function nothing() {
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	$(".login").show();
+	$("#btn-login").click(function ()
+	{
+		$(".login").hide();
+		$(".success").show();
+	});
+});
