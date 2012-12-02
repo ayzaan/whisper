@@ -4,13 +4,22 @@ function firebasesucks(info)
  chrome.tabs.create({url: "https://www.google.com/search?q=firebase+sucks%3F&oq=firebase+sucks%3F&aqs=chrome.0.57.1610&sugexp=chrome,mod=1&sourceid=chrome&ie=UTF-8"})
 }
 
-function attach(info)
+function encrypt(field){
+	alert(field.value);
+	field.value = 'This is an encrypted message'
+}
+
+function attach(e)
 {
-	// check if logged in
-	// if not logged in, tell user to click on button on top left and login
-	// if logged in, then either add the other person's username on whisper, or attach the key in link
+	if (this.form != null){
+		alert('we have a form')
+		this.form.addEventListener('submit', function(e){ encrypt(this) }, true);
+	} else {
+		this.addEventListener('keypress', function(e){ alert('keypress'); if (e.keyCode == 13 && !e.shiftKey) { encrypt(this) } }, true);
+	}
+	alert('Attached' + this.value);
 }
 
 chrome.contextMenus.create ({
-    title:"Encrypt with Whisper", contexts:["editable"], onclick:firebasesucks
+    title:"Encrypt with Whisper", contexts:["editable"], onclick:attach
 });
