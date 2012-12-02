@@ -6,7 +6,6 @@ function what() {
 	var nameRef = new Firebase('https://whisper.firebaseIO.com/users');
 	// nameRef.child(username).set({});
 	var newUser = new Firebase('https://whisper.firebaseIO.com/users/');
-	newUser.update{ username : password };
 	alert("j");
 }
 
