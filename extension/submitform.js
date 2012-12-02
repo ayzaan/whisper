@@ -1,10 +1,5 @@
 // debugger;
 
-function login() {
-	var username = document.getElementById('inputUsername').value;
-	var password = document.getElementById('inputPassword').value;
-}
-
 document.addEventListener('DOMContentLoaded', function() {
 	chrome.storage.local.get(["username", "pw", "keys"], function(data)
 	{
@@ -18,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	$("#btn-register").click(function ()
 	{
-		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=register&username="+$("#username").get(0).value+"&pw="+$("#pw").get(0).value, function (data)
+		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=register&username="+$("#inputUsername").get(0).value+"&pw="+$("#inputPassword").get(0).value, function (data)
 		{
 			if (data['success'])
 			{
@@ -32,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	$("#btn-login").click(function ()
 	{
-		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=login&username="+$("#username").get(0).value+"&pw="+$("#pw").get(0).value, function (data)
+		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=login&username="+$("#inputUsername").get(0).value+"&pw="+$("#inputPassword").get(0).value, function (data)
 		{
 			if (data['success'])
 			{
@@ -60,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 	$("#btn-addFriend").click(function ()
 	{
-		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=login&username="+$("#username").get(0).value+"&pw="+$("#pw").get(0).value, function (data)
+		$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=login&username="+$("#inputUsername").get(0).value+"&pw="+$("#inputPassword").get(0).value, function (data)
 		{
 			if (data['success'])
 			{
