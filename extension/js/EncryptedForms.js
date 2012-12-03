@@ -6,7 +6,7 @@ var EncryptedForms = new function ()
 	{
 		if (element.form != null)
 		{
-			$(element).closest(".uiTypeahead").css({"background-color" : "#5cff68"});
+			$(element).closest(".uiTypeahead").css({ "background-color": "#5cff68", "background": "top right 10px no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')" });
 			EncryptedForms.forms[element.form.name] = [element, false];
 			$(element.form).submit(function (e)
 			{
@@ -23,7 +23,7 @@ var EncryptedForms = new function ()
 		}
 		else 
 		{
-			$(clickedEl).closest("table").css({"background-color" : "#5cff68"});
+			$(clickedEl).closest("table").css({ "background": "top right no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')", "background-color": "#5cff68" });
 			/*clickedEl.addEventListener('keydown', function(e){ 
 				if (e.keyCode == 13 && !e.shiftKey) { 
 					encrypt(clickedEl)
