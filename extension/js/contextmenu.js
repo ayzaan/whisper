@@ -6,6 +6,13 @@ function attach(e)
 	
 }
 
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+    if (changeInfo.status === 'complete') {
+        chrome.tabs.sendMessage(tabId, {method: "enableDecrypt"}, null);
+    }
+	
+});
+
 chrome.contextMenus.create ({
 	title:"Encrypt with Whisper", contexts:["editable"], onclick:attach
 });
