@@ -21,20 +21,20 @@ var EncryptedForms = new function ()
 				}
 			});
 		}
-		// gmail
+		/* gmail
 		else if($('[g_editable*="true"]') != null)
 		{
 			alert(element);
-			var text = $('[g_editable*="true"]').innerHTML; // gets contents inside 'compose email' in gmail
-			alert($(element).closest(".editable").name); // this doesn't work for some reason
+			var text = $('[g_editable*="true"]').html(); // gets contents inside 'compose email' in gmail
+			alert($(element).closest(".editable").length); // this doesn't work for some reason
 			$(element).closest(".editable").css({ "background": "top right no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')", "background-color": "#5cff68" });
-		}
+		}*/
 		else 
 		{ // if it's not a form - works for facebook chat and gchat (confirmed)
 			$(clickedEl).closest("table").css({ "background": "top right no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')", "background-color": "#5cff68" });
-			/* second argument true to use event capturing instead of bubbling (described http://www.quirksmode.org/js/events_order.html)
-			   In order to ensure our event listener gets added first, adds the listener to the parent of the clicked element
-			   so that event capturing hits the outside wrapper first and gets our listener first */ 
+			// second argument true to use event capturing instead of bubbling (described http://www.quirksmode.org/js/events_order.html)
+			// In order to ensure our event listener gets added first, adds the listener to the parent of the clicked element
+			// so that event capturing hits the outside wrapper first and gets our listener first
 			$(clickedEl).parent().get(0).addEventListener('keydown', function(e){ 
 				if (e.keyCode == 13 && !e.shiftKey) { 
 					clickedEl.value = encrypt(clickedEl.value);
