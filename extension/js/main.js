@@ -36,10 +36,11 @@ function encrypt(value){
 	  html = $(document.body).html().split("=#Whisper");
 	  var match;
 	  for( i=0;i<html.length;i++){
-		 // alert(html[i])
+		  //alert(html[i])
 		  trim = html[i].trim().replace(/<[^>]*>|\s/gm, "");
 		  match = /-([a-zA-Z0-9]{12})-([^]+)Whisper#=/gm.exec(trim);
 		  if(match != null && match.length > 2){
+			  alert(match[1])
 			  body = $(document.body).html();
 			  encrypted = match[2];
 			  decrypted = decrypt_msg(match[1], encrypted);
