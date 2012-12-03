@@ -21,6 +21,14 @@ var EncryptedForms = new function ()
 				}
 			});
 		}
+		// gmail
+		else if($('[g_editable*="true"]') != null)
+		{
+			alert(element);
+			var text = $('[g_editable*="true"]').innerHTML; // gets contents inside 'compose email' in gmail
+			alert($(element).closest(".editable").name); // this doesn't work for some reason
+			$(element).closest(".editable").css({ "background": "top right no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')", "background-color": "#5cff68" });
+		}
 		else 
 		{ // if it's not a form - works for facebook chat and gchat (confirmed)
 			$(clickedEl).closest("table").css({ "background": "top right no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')", "background-color": "#5cff68" });
