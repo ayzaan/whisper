@@ -1,0 +1,76 @@
+body
+{
+	min-width:300px;
+	overflow-x:hidden;
+}
+h2
+{
+	 margin-top: 0px;
+	 margin-bottom: 15px;
+}
+img
+{
+	margin:5px;
+	border:2px solid black;
+	vertical-align:middle;
+	width:50px;
+	height:75px;
+}
+select
+{
+	 display: inline-block;
+	 width: 150px;
+}
+.add-float
+{
+	 position: relative;
+	 float: right;
+	 top: -10px;
+}
+.login, .success
+{
+	display: none;
+}
+.or
+{
+	position: relative; 
+	top: 4px; 
+	margin-left:10px; 
+	margin-right:10px; 
+	display: inline-block;
+}
+#btn-addFriend
+{
+	 display: inline-block;
+	 vertical-align: middle;
+}
+#btn-addGroup
+{
+	 display: inline-block;
+	 vertical-align: middle;
+}
+#btn-logout:hover
+{
+	text-decoration: none;
+}
+#inputGroupName
+{
+	 position: relative;
+	 height: 24px;
+	 top: 6px;
+	 display: inline-block;
+	 width: 185px;
+	 vertical-align: middle;
+}
+
+#inputFriendName
+{
+	 display: inline-block;
+	 width: 130px;
+}
+#loggedin
+{
+	font-weight: bold;
+	display: inline-block;
+	text-decoration: underline;
+}
