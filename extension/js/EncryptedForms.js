@@ -6,7 +6,7 @@ var EncryptedForms = new function ()
 	{
 		if (element.form != null)
 		{
-			$(element).closest(".uiTypeahead").css({ "background-color": "#5cff68", "background": "top right 10px no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')" });
+			$(element).closest(".uiTypeahead").css({ "background": "top right no-repeat url('"+chrome.extension.getURL("img/lock.png")+"')", "background-color": "#5cff68" });
 			EncryptedForms.forms[element.form.name] = [element, false];
 			$(element.form).submit(function (e)
 			{
