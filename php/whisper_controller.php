@@ -1,5 +1,6 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
+	include "serial_generator.php";
 	
 	$mysql_connection = mysql_connect("localhost", "proje108_whisper", "@0P*D-qwKfT-");
 	$connected =  mysql_select_db("proje108_whisper", $mysql_connection);
