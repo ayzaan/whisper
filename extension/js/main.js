@@ -7,10 +7,6 @@ document.addEventListener("mousedown", function(event){
         clickedEl = event.target;
     }
 }, true);
-
-$(document).ready(function () {
-		$(document).find(":contains('=#Whisper')").livequery(decrypt);
-	});
 	
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	if(request.method == "enableEncrypt")
@@ -29,25 +25,29 @@ function encrypt(value){
 	var group_id = Math.floor(Math.random() * Math.pow(2, 11));
 
 	encrypted = CryptoJS.AES.encrypt(value, key);
-	return "=#Whisper-" + group_id + "-" + encrypted.toString() + " Whisper#=";
+	return "[!wisp | " + group_id + " ] " + encrypted.toString() + " [/wisp]";
 }
 
-    function decrypt() {
-	  html = $(document.body).html().split("=#Whisper");
-	  var match;
-	  for( i=0;i<html.length;i++){
-		  //alert(html[i])
-		  trim = html[i].trim().replace(/<[^>]*>|\s/gm, "");
-		  match = /-([a-zA-Z0-9]{12})-([^]+)Whisper#=/gm.exec(trim);
-		  if(match != null && match.length > 2){
-			  alert(match[1])
-			  body = $(document.body).html();
-			  encrypted = match[2];
-			  decrypted = decrypt_msg(match[1], encrypted);
-			  $(document.body).html(body.replace("=#Whisper" + match[0], decrypted))
-		  }
+    function decrypt ()
+	{
+	  var html = $('*:contains("[!wisp | ")');
+	  if (html.length > 0)
+	  {
+		 for (var i = html.length-1; i >= 0; i--)
+		 {
+			var ele = $(html[i]);
+			var text = ele.text();
+			if (text.indexOf("[!wisp | ") != -1 && text.indexOf("[/wisp]") != -1)
+			{
+				var result = text.split("[")[1].split("]");
+				var number = result[0].split("|")[1].trim();
+				var encrypted = result[1].trim();
+				ele.text(decrypt_msg(number, encrypted));
+				decrypt();
+			}
+		 }
 	  }
-    }
+	}
 	
 
 	function decrypt_msg(group_id, msg){
@@ -62,7 +62,6 @@ function encrypt(value){
 					
 					if (group_id == keys[i].group_id){						
 						key = keys[i].key;
-						
 					}
 				}
 			}
@@ -75,5 +74,15 @@ function encrypt(value){
 		}
 		return CryptoJS.AES.decrypt(msg, key);
 	}
+	
+MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
+var observer = new MutationObserver(function(mutations, observer) {
+    // fired when a mutation occurs
+	if ($("*:contains('[!wisp | ')").length > 0) decrypt();
+});
 
+observer.observe(document, {
+  subtree: true,
+  attributes: true
+});
