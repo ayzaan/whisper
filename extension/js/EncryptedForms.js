@@ -1,6 +1,7 @@
 var EncryptedForms = new function ()
 {
 	this.groups = new Array();
+	this.loaded = false;
 	this.currentGroup = null;
 	this.forms = new Array();
 	
@@ -21,8 +22,26 @@ var EncryptedForms = new function ()
 					break;
 				}
 			}
+			
+			if (!EncryptedForms.loaded)
+			{
+				MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+				var observer = new MutationObserver(function(mutations, observer) {
+					// fired when a mutation occurs
+					if ( mutations.length > 0 && $(mutations[0].target).find("*:contains('[!wisp | ')").length > 0)
+					{
+						decrypt(mutations[0].target);
+					}
+				});
+				
+				observer.observe(document, { characterData : true, childList : true, subtree: true });
+				EncryptedForms.loaded = true;
+			}
 		});
 	}
+	
+	this.syncGroups();
 	
 	this.add = function(element)
 	{	// if it is a form (supposedly), works for facebook status (confirmed), but not gmail
@@ -84,5 +103,3 @@ function array_to_string(arr)
 	str += " }";
 	return str;
 }
-
-EncryptedForms.syncGroups();

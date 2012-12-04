@@ -87,14 +87,3 @@ chrome.storage.local.get(["username", "pw"], function(data)
 		
 	});
 });
-MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-
-var observer = new MutationObserver(function(mutations, observer) {
-    // fired when a mutation occurs
-	if ( mutations.length > 0 && $(mutations[0].target).find("*:contains('[!wisp | ')").length > 0)
-	{
-		decrypt(mutations[0].target);
-	}
-});
-
-observer.observe(document, { characterData : true, childList : true, subtree: true });;
