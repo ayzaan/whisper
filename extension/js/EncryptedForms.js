@@ -1,6 +1,28 @@
 var EncryptedForms = new function ()
 {
+	this.groups = new Array();
+	this.currentGroup = null;
 	this.forms = new Array();
+	
+	this.syncGroups = function ()
+	{
+		chrome.storage.local.get("groups", function(data)
+		{
+			if (data['groups'] == null)
+			{
+				chrome.storage.local.set({ "groups" : {} });
+			}
+			else
+			{
+				EncryptedForms.groups = data['groups'];
+				for (var i in EncryptedForms.groups)
+				{
+					EncryptedForms.currentGroup = i;
+					break;
+				}
+			}
+		});
+	}
 	
 	this.add = function(element)
 	{	// if it is a form (supposedly), works for facebook status (confirmed), but not gmail
@@ -13,7 +35,7 @@ var EncryptedForms = new function ()
 				if (!EncryptedForms.forms[e.target.name][1])
 				{
 					EncryptedForms.forms[e.target.name][1] = true;
-					EncryptedForms.forms[e.target.name][0].value = encrypt(EncryptedForms.forms[e.target.name][0].value);
+					EncryptedForms.forms[e.target.name][0].value = encrypt(EncryptedForms.groups[EncryptedForms.currentGroup], EncryptedForms.currentGroup, EncryptedForms.forms[e.target.name][0].value);
 					$(e.target).find("input[name='xhpc_message']").val(EncryptedForms.forms[e.target.name][0].value);
 					$(e.target).find(".highligherContent .hidden_elem").html(EncryptedForms.forms[e.target.name][0].value);
 					setTimeout("EncryptedForms.submit('"+e.target.name+"');", 10);
@@ -37,7 +59,7 @@ var EncryptedForms = new function ()
 			// so that event capturing hits the outside wrapper first and gets our listener first
 			$(clickedEl).parent().get(0).addEventListener('keydown', function(e){ 
 				if (e.keyCode == 13 && !e.shiftKey) { 
-					clickedEl.value = encrypt(clickedEl.value);
+					clickedEl.value = encrypt(EncryptedForms.groups[EncryptedForms.currentGroup], EncryptedForms.currentGroup, clickedEl.value);
 					return false;
 				} 
 			}, true);
@@ -49,4 +71,18 @@ var EncryptedForms = new function ()
 		$(this.forms[id][0].form).find("input[type='submit'], button").trigger("click");
 		this.forms[id][1] = false;
 	}
-}	
+}
+
+function array_to_string(arr)
+{
+	var str = "{ ";
+	for (var i in arr)
+	{
+		str += "[ "+i+" : "+ arr[i] +" ], ";
+	}
+	str = str.substr(0, str.length - 2);
+	str += " }";
+	return str;
+}
+
+EncryptedForms.syncGroups();

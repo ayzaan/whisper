@@ -1,6 +1,6 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
-	include "serial_generator.php";
+	include "func/serial_generator.php";
 	
 	$mysql_connection = mysql_connect("localhost", "proje108_whisper", "@0P*D-qwKfT-");
 	$connected =  mysql_select_db("proje108_whisper", $mysql_connection);
@@ -34,35 +34,72 @@
 		
 		echo json_encode($result);
 	}
-	else if ($_REQUEST['action'] == 'checkuser'){
+	/*else if ($_REQUEST['action'] == 'checkuser'){
 		$sql_result = mysql_result(mysql_query(sprintf("SELECT id FROM users WHERE username='%s'", $_REQUEST['username'])));
-		if($sql_result){
+		if(mysql_num_rows($sql_result) > 0)
+		{
 			$result['success'] = true;
 			$result['id'] = $sql_result;
 		}
-		else
-			$result['success'] = false;
+		else $result['success'] = false;
+		echo json_encode($result);
+	}*/
+	else if ($_REQUEST['action'] == 'new_group')
+	{
+		$serial = serial_generator();
+		$query = mysql_query(sprintf("SELECT * FROM users WHERE username='%s' AND pw='%s'", $_REQUEST['username'], $_REQUEST['pw']));
+		if (mysql_num_rows($query) > 0)
+		{
+			$array_result = mysql_fetch_array($query);
+			$id = $array_result['id'];
+			$sql_result = mysql_query(sprintf("INSERT INTO groups (id, owner_id, name) VALUES ('%s', '%s', '%s')", $serial, $id, $_REQUEST['group_name']));
+			$result['success'] = true;
+			$result['id'] = $serial;
+		}
+		else $result['success'] = false;
 		echo json_encode($result);
 	}
 	else if ($_REQUEST['action'] == 'share'){
-		$sql_result = mysql_result(mysql_query(sprintf("SELECT id FROM users WHERE username='%s'", $_REQUEST['username'])));
-		$result['success'] = false;
-		if ( $sql_result ){
-			if ( mysql_query(sprintf("INSERT INTO keys (group_id, recipient_id, key) VALUES ('%d', '%d', '%s')", $_REQUEST['group_id'], $sql_result, $_REQUEST['key'])) ){
+		$query = mysql_query(sprintf("SELECT * FROM users WHERE username='%s' AND pw='%s'", $_REQUEST['username'], $_REQUEST['pw']));
+		$query2 = mysql_query(sprintf("SELECT * FROM users WHERE username='%s'", $_REQUEST['recipient']));
+		if (mysql_num_rows($query) > 0 && mysql_num_rows($query2) > 0 && $_REQUEST['key'] != NULL && strlen($_REQUEST['key']) == 256)
+		{
+			$user = mysql_fetch_array($query);
+			$recipient = mysql_fetch_array($query2);
+			$id = $user['id'];
+			$recipient_id = $recipient['id'];
+			$query = mysql_query(sprintf("SELECT * FROM groups WHERE id='%s' AND owner_id='%s'", $_REQUEST['group_id'], $id));
+			if (mysql_num_rows($query) > 0)
+			{
+				mysql_query(sprintf("INSERT INTO queue (group_id, recipient_id, aes_key) VALUES ('%s', %d, '%s')", $_REQUEST['group_id'], $recipient_id, $_REQUEST['key']));
 				$result['success'] = true;
 			}
+			else $result['success'] = false;
 		}
-		
+		else $result['success'] = false;
 		echo json_encode($result);
 	}
 	else if ($_REQUEST['action'] == 'retrieve'){
-		$result['success'] = false;
-		$sql_result = mysql_result(mysql_query("SELECT key FROM keys WHERE group_id = '%d' AND user_id = '%d'", $_REQUEST['group_id'], $_REQUEST['user_id']));
-		if ( $sql_result ) {
-			mysql_query(sprintf("REMOVE FROM keys WHERE group_id = '%d' AND user_id = '%d' LIMIT 1", $_REQUEST['group_id'], $_REQUEST['user_id']));
-			$result['key'] = $sql_result;
-			$result['success'] = true;
+		$query = mysql_query(sprintf("SELECT * FROM users WHERE username='%s' AND pw='%s'", $_REQUEST['username'], $_REQUEST['pw']));
+		if (mysql_num_rows($query) > 0)
+		{
+			$user = mysql_fetch_array($query);
+			$id = $user['id'];
+			$sql_result = mysql_query(sprintf("SELECT * FROM queue where recipient_id = '%d'", $id));
+			if (mysql_num_rows($sql_result) > 0)
+			{
+				$result['groups'] = array();
+				while ($row = mysql_fetch_array($sql_result))
+				{
+					mysql_query(sprintf("DELETE FROM queue WHERE group_id = '%s' AND recipient_id = '%d' LIMIT 1", $row['group_id'], $id));
+					$group = array($row['group_id'], $row['aes_key']);
+					$result['groups'][] = $group;
+				}
+				$result['success'] = true;
+			}
+			else $result['success'] = false;
 		}
+		else $result['success'] = false;
 		
 		echo json_encode($result);
 	}

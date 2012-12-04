@@ -1,5 +1,6 @@
 //content script
 var clickedEl = null;
+var _groups = null;
 
 document.addEventListener("mousedown", function(event){
     //right click
@@ -17,15 +18,17 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 	{
 		decrypt();
     }
+	if(request.method == "newGroup")
+	{
+		EncryptedForms.syncGroups();
+	}
 });
-
     
-function encrypt(value){
-	var key = CryptoJS.lib.WordArray.random(128/8).toString();
-	var group_id = Math.floor(Math.random() * Math.pow(2, 11));
-
-	encrypted = CryptoJS.AES.encrypt(value, key);
-	return "[!wisp | " + group_id + " ] " + encrypted.toString() + " [/wisp]";
+function encrypt(key, group_id, value){
+	//encrypted = CryptoJS.AES.encrypt(value, key);
+	var aes = new pidCrypt.AES.CBC();
+	var encrypted = aes.encryptText(value, key, {nBits: 256});
+	return "[!wisp | " + group_id + " ] " + encrypted + " [/wisp]";
 }
 
     function decrypt (element)
@@ -50,31 +53,40 @@ function encrypt(value){
 	}
 	
 
-	function decrypt_msg(group_id, msg){
-		var key, username;
-		chrome.storage.local.get(["username", "keys"], function(data)
-		{
-			
-			if (data.username != null) {
-				username = data.username;
-				keys = JSON.parse(data.keys);
-				for(i=0;i<keys.Maths.length;i++){
-					
-					if (group_id == keys[i].group_id){						
-						key = keys[i].key;
-					}
-				}
-			}
-		});
-		if (username == null){
-			return "You must log in to view this message.";
-		} 
+	function decrypt_msg(group_id, msg)
+	{
+		var key = EncryptedForms.groups[group_id];
 		if (key == null ){
 			return "You don't have access to this message.";
 		}
-		return CryptoJS.AES.decrypt(msg, key);
+		else
+		{
+			var aes = new pidCrypt.AES.CBC();
+			var decrypted = aes.decryptText(msg, key, {nBits: 256});
+			return decrypted;
+		}
 	}
 
+chrome.storage.local.get(["username", "pw"], function(data)
+{
+	$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=retrieve&username="+data['username']+"&pw="+data['pw'], function (data)
+	{
+		_groups = data['groups'];
+		chrome.storage.local.get("groups", function(data)
+		{
+			if (_groups != [] && _groups != null)
+			{
+				var groups = data['groups'];
+				for (var i = 0; i < _groups.length; i++)
+				{
+					groups[_groups[i][0]] = _groups[i][1];
+				}
+				chrome.storage.local.set({"groups" : groups });
+			}
+		});
+		
+	});
+});
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 var observer = new MutationObserver(function(mutations, observer) {

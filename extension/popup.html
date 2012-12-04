@@ -9,6 +9,7 @@
 <link href="css/popup.css" rel="stylesheet">
 <!-- JavaScript and HTML must be in separate files for security. -->
 <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/aes.js"></script>
 <script src="js/submitform.js" type="text/javascript"></script>
 </head>
 <body>
@@ -34,12 +35,13 @@
 </div>
 <div class="success" align="middle">
   <h2>whisper.</h2>
-  <input type="text" id="inputGroupName" placeholder="group name"><button id="btn-addGroup" class="btn btn-inverse" type="submit" value="+ new group">+ new group</button><br><br>
+  <input type="text" id="inputGroupName" placeholder="group name"><button id="btn-newGroup" class="btn btn-inverse" type="submit" value="+ new group">+ new group</button><br><br>
   <select name="group">
   	<option value="choose group">choose group</option>
   </select>
   <input type="text" id="inputFriendName" placeholder="friend's username"><br><br>
   <div class="add-float"><button id="btn-addFriend" class="btn btn-success" type="submit" value="+ add">+ add</button></div><div align="left">welcome: <div id="loggedin"></div> <a id="btn-logout" href="#">(logout)</a></div>
+  <div id="keys"></div>
   </div>
 </div>
 </body>
