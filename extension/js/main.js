@@ -28,9 +28,9 @@ function encrypt(value){
 	return "[!wisp | " + group_id + " ] " + encrypted.toString() + " [/wisp]";
 }
 
-    function decrypt ()
+    function decrypt (element)
 	{
-	  var html = $('*:contains("[!wisp | ")');
+	  var html = $(element).find('*:contains("[!wisp | ")');
 	  if (html.length > 0)
 	  {
 		 for (var i = html.length-1; i >= 0; i--)
@@ -74,19 +74,15 @@ function encrypt(value){
 		}
 		return CryptoJS.AES.decrypt(msg, key);
 	}
-	
+
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 var observer = new MutationObserver(function(mutations, observer) {
     // fired when a mutation occurs
-	if ($("*:contains('[!wisp | ')").length > 0)
+	if ( mutations.length > 0 && $(mutations[0].target).find("*:contains('[!wisp | ')").length > 0)
 	{
-		decrypt();
-		setTimeout("decrypt()", 600);
+		decrypt(mutations[0].target);
 	}
 });
 
-observer.observe(document, {
-  subtree: true,
-  attributes: true
-});
+observer.observe(document, { characterData : true, childList : true, subtree: true });;
