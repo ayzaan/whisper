@@ -39,6 +39,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	});
+	$("#btn-addGroup").click(function () {
+		var groupString = "";
+		chrome.storage.local.get(['groups'], function(data) {
+			groupString = data.groups;
+		});
+		if (groupString == null) {
+			chrome.storage.local.set({'groups' : $("#inputGroupName").get(0).value});
+		} else {
+			groupString = groupString+" "+$("#inputGroupName").get(0).value;
+			chrome.storage.local.set({'groups' : groupString});
+		}
+		chrome.storage.local.get(['groups'], function(data) {
+			setMenu(data.groups);
+		});
+	});
 	$("#btn-logout").click(function ()
 	{
 		chrome.storage.local.get(["username", "pw", "keys"], function(data)
