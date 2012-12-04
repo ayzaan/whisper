@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				index = i;
 				break;
 			}
-			$(".success").text("http://www.projectvoid.com/whisper/whisper_controller.php?action=share&username="+data['username']+"&pw="+data['pw']+"&group_id="+i+"&key="+data['groups'][i]+"&recipient="+$("#inputFriendName").get(0).value);
 			$.getJSON("http://www.projectvoid.com/whisper/whisper_controller.php?action=share&username="+data['username']+"&pw="+data['pw']+"&group_id="+i+"&key="+data['groups'][i]+"&recipient="+$("#inputFriendName").get(0).value, function (data)
 			{
 				if (data['success'])
