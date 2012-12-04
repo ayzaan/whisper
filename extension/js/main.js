@@ -81,7 +81,7 @@ var observer = new MutationObserver(function(mutations, observer) {
     // fired when a mutation occurs
 	if ($("*:contains('[!wisp | ')").length > 0)
 	{
-		encrypt();
+		decrypt();
 		setTimeout("decrypt()", 600);
 	}
 });
