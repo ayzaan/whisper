@@ -79,7 +79,11 @@ MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 var observer = new MutationObserver(function(mutations, observer) {
     // fired when a mutation occurs
-	if ($("*:contains('[!wisp | ')").length > 0) decrypt();
+	if ($("*:contains('[!wisp | ')").length > 0)
+	{
+		encrypt();
+		setTimeout("decrypt()", 600);
+	}
 });
 
 observer.observe(document, {
